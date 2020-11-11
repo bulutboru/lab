@@ -15,10 +15,11 @@
  */
 
 int product(int *arr, int n) {
+  if(n == 0) return 0;
   int i;
-  int total = 0;
+  int total = 1;
   for(i=0; i<n; i++) {
-    total =+ arr[i];
+    total *= arr[i];
   }
   return total;
 }
@@ -28,13 +29,17 @@ int product(int *arr, int n) {
  * n prime numbers
  */
 int* getPrimes(int n) {
-  int result[n];
+  int *result = malloc((n)*sizeof(int));
   int i = 0;
   int x = 2;
   while(i < n) {
     if(isPrime(x)) {
       result[i] = x;
       i++;
+    }
+    if(x == 2){
+      x++;
+    }else{
       x += 2;
     }
   }
@@ -46,10 +51,10 @@ int* getPrimes(int n) {
  * integer is prime and false otherwise.
  */
 int isPrime(int x) {
-  if(x % 2 == 0) {
-    return 0;
-  }
-  for(int i=3; i<=sqrt(x); i+=2) {
+  if(x < 3) return 1;
+  if(x % 2 == 0) return 0;
+ 
+  for(int i=3; i<=round(sqrt(x)); i+=2) {
     if(x % i == 0) {
       return 0;
     }
@@ -60,8 +65,8 @@ int isPrime(int x) {
 int main(int argc, char **argv) {
 
   int n = 10; //default to the first 10 primes
-  if(argc = 2) {
-    atoi(argv[2]);
+  if(argc == 2) {
+    n = atoi(argv[1]);
   }
 
   int *primes = getPrimes(n);
